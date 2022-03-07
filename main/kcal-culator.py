@@ -11,21 +11,25 @@
 #[ ] ]If the ingredient is not in the file, prompt the user to input the calorie content 
 #[ ] and then store in the file.
 
-def gather_location(): 
-    user_input = input("To open a data sheet specify file location.\nEnter \"default\" for the default file.\n") 
-    user_input.strip()
-    #add some string processing to clear the input
+from csv import reader
 
-    if user_input.lower() == "default": 
+def gather_location(): 
+    user_input = input("Specify file location or enter \"d\" for the default file.\n").strip()
+
+    if user_input.lower() == "d": 
         user_input = "/Users/martapodziewska/Documents/01_Coding/01_GitHub_working_repos/kcal-culator/main/draft_data_sheet.csv"
+
+    #ingredient = input("enter an engredient:").lower().strip()
+    
     return user_input
 
 def open_data_sheet(file_location):
         
     try: 
         with open(file_location) as ds: 
-            data_sheet_content = ds.read()
-        print(data_sheet_content)
+            data_sheet_content = reader(ds)
+            for row in data_sheet_content:
+                print(row)
     except FileNotFoundError: 
         print("The file you specified does not exist.")
         create_data_sheet(file_location)
