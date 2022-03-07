@@ -1,8 +1,15 @@
+# Requirements v1:
 #[x] create a program that take a file location
 #[x] opens and reads the file (displays all the content on the terminal)
 #[x] if no file, promps a message no file
 #[x] asks if to create or quit
 #[x] creates or quits
+
+# Requirements v2:
+#[ ] request the user to input an ingredient
+#[ ] display the calorie content of the given ingredient. 
+#[ ] ]If the ingredient is not in the file, prompt the user to input the calorie content 
+#[ ] and then store in the file.
 
 def gather_location(): 
     user_input = input("To open a data sheet specify file location.\nEnter \"default\" for the default file.\n") 
