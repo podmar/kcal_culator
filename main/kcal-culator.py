@@ -53,12 +53,8 @@ class DataSheet():
             return
 
 class Ingredient: 
-    def __init__(self, file_location, ingredient_name, calorie_content):
-        self.file_location = file_location
-        self.ingredient_name = ingredient_name
-        self.calorie_content = calorie_content
 
-    def input_ingredient(self): 
+    def input_ingredient_name(self): 
         ingredient_name = input("Enter an engredient:").lower().strip()
         return ingredient_name
 
@@ -74,7 +70,7 @@ class Ingredient:
                     break
                 
             if ingredient_kcal == 0: 
-                save_ingredient(file_location, ingredient_name)
+                self.save_ingredient(file_location, ingredient_name)
 
         return
 
@@ -86,7 +82,12 @@ class Ingredient:
         return
 
 def main(): 
-    find_ingredient(gather_location(), input_ingredient())
+    
+    NewDataSheet = DataSheet()
+    NewIngredient = Ingredient()
+
+    NewIngredient.find_ingredient(NewDataSheet.gather_location(), NewIngredient.input_ingredient_name())
+
     return
 
 if __name__ == "__main__": 
