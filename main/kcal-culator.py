@@ -15,66 +15,74 @@
 #[ ] work on the main function
 #   [ ] implement all the functions in the flow
 #   [ ] make the program run constantly
-#[ ] find a solution for the source file
+#[ ] find a solution for the source file (keyboard?)
 
 from csv import reader, writer
 
-def gather_location(): 
-    location = input("Specify file location or enter \"d\" for the default file.\n").strip()
+class DataSheet():
 
-    if location.lower() == "d": 
-        location = "/Users/martapodziewska/Documents/01_Coding/01_GitHub_working_repos/kcal-culator/main/draft_data_sheet.csv"
-    
-    return location
+    def gather_location(self): 
+        location = input("Specify file location or enter \"d\" for the default file.\n").strip()
 
-def input_ingredient(): 
-    ingredient = input("Enter an engredient:").lower().strip()
-    return ingredient
-
-def open_data_sheet(file_location):
+        if location.lower() == "d": 
+            location = "/Users/martapodziewska/Documents/01_Coding/01_GitHub_working_repos/kcal-culator/main/draft_data_sheet.csv"
         
-    try: 
-        with open(file_location) as ds: 
-            data_sheet_content = ds.read()
-            print(data_sheet_content)
-    except FileNotFoundError: 
-        print("The file you specified does not exist.")
-        create_data_sheet(file_location) 
+        return location
 
-    return
-
-def find_ingredient(file_location,ingredient): 
-    ingredient_kcal = 0
-
-    with open(file_location) as ds: 
-        data_sheet_content = reader(ds)
-        for row in data_sheet_content:
-            if row[0] == ingredient:
-                ingredient_kcal = int(row[1])
-                print(ingredient_kcal)
-                break
+    def open_data_sheet(self,file_location):
             
-        if ingredient_kcal == 0: 
-            save_ingredient(file_location, ingredient)
+        try: 
+            with open(file_location) as ds: 
+                data_sheet_content = ds.read()
+                print(data_sheet_content)
+        except FileNotFoundError: 
+            print("The file you specified does not exist.")
+            create_data_sheet(file_location) 
 
-    return
+        return
 
-def save_ingredient(file_location, ingredient_name):
-    calorie_content = input("Enter the number of calories in 100g of %s:\n" %ingredient_name)
-    with open(file_location, 'a') as ds: 
-            ds_writer = writer(ds)
-            ds_writer.writerow([ingredient_name, calorie_content])
-    return
+    def create_data_sheet(self,file_name): 
+        user_input = input("Entered file name: %s.\nWould you like to create a new file? Y/N:\n" %(file_name))
 
-def create_data_sheet(file_name): 
-    user_input = input("Entered file name: %s.\nWould you like to create a new file? Y/N:\n" %(file_name))
+        if user_input.lower() == "y": 
+            ds = open(file_name, "x")
+            ds.close()
+            print("File created at %s" %(file_name))
+            return
+        else:
+            return
 
-    if user_input.lower() == "y": 
-        ds = open(file_name, "x")
-        ds.close()
-        print("File created at %s" %(file_name))
-        return file_name
-    else:
+class Ingredient: 
+    def __init__(self, file_location, ingredient_name, calorie_content):
+        self.file_location = file_location
+        self.ingredient_name = ingredient_name
+        self.calorie_content = calorie_content
+
+    def input_ingredient(self): 
+        ingredient_name = input("Enter an engredient:").lower().strip()
+        return ingredient_name
+
+    def find_ingredient(self, file_location, ingredient_name): 
+        ingredient_kcal = 0
+
+        with open(file_location) as ds: 
+            data_sheet_content = reader(ds)
+            for row in data_sheet_content:
+                if row[0] == ingredient_name:
+                    ingredient_kcal = int(row[1])
+                    print(ingredient_kcal)
+                    break
+                
+            if ingredient_kcal == 0: 
+                save_ingredient(file_location, ingredient_name)
+
+        return
+
+    def save_ingredient(self, file_location, ingredient_name):
+        calorie_content = input("Enter the number of calories in 100g of %s:\n" %ingredient_name)
+        with open(file_location, 'a') as ds: 
+                ds_writer = writer(ds)
+                ds_writer.writerow([ingredient_name, calorie_content])
         return
 
 def main(): 
