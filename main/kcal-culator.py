@@ -11,6 +11,12 @@
 #[x] ]If the ingredient is not in the file, prompt the user to input the calorie content 
 #[x] and then store in the file.
 
+#TO DO
+#[ ] work on the main function
+#   [ ] implement all the functions in the flow
+#   [ ] make the program run constantly
+#[ ] find a solution for the source file
+
 from csv import reader, writer
 
 def gather_location(): 
