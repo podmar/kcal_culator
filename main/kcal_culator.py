@@ -36,21 +36,21 @@ class DataSheet():
                 data_sheet_content = ds.read()
                 print(data_sheet_content)
         except FileNotFoundError: 
-            print("The file you specified does not exist.")
-            create_data_sheet(file_location) 
+            user_input = input("The file %s does not exist.\n Would you like to create a new file? Y/N:\n" %(file_location))
+            
+            if user_input.lower() == "y": 
+                create_data_sheet(file_location) 
+            else:
+                return
 
         return
 
     def create_data_sheet(self,file_name): 
-        user_input = input("Entered file name: %s.\nWould you like to create a new file? Y/N:\n" %(file_name))
-
-        if user_input.lower() == "y": 
-            ds = open(file_name, "x")
-            ds.close()
-            print("File created at %s" %(file_name))
-            return
-        else:
-            return
+        
+        ds = open(file_name, "x")
+        ds.close()
+        print("File created at %s" %(file_name))
+        return
 
 class Ingredient: 
 
