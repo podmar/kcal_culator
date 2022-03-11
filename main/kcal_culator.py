@@ -36,7 +36,7 @@ class DataSheet():
                 data_sheet_content = ds.read()
                 print(data_sheet_content)
         except FileNotFoundError: 
-            user_input = input("The file %s does not exist.\n Would you like to create a new file? Y/N:\n" %(file_location))
+            user_input = input("The file %s does not exist. \nWould you like to create a new file? Y/N:\n" %(file_location))
             
             if user_input.lower() == "y": 
                 create_data_sheet(file_location) 
