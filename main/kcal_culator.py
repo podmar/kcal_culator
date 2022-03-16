@@ -18,16 +18,11 @@
 #[ ] find a solution for the source file (keyboard?)
 
 from csv import reader, writer
+import sys
 
-class DataSheet():
-
-    def gather_location(self): 
-        location = input("Specify file location or enter \"d\" for the default file.\n").strip()
-
-        if location.lower() == "d": 
-            location = "draft_data_sheet.csv"
-        
-        return location
+class DataSheet:
+    def __init__(self, data_sheet_location):
+        self.data_sheet_location = data_sheet_location.strip()
 
     def open_data_sheet(self,file_location):
             
@@ -45,15 +40,22 @@ class DataSheet():
 
         return
 
-    def create_data_sheet(self,file_name): 
-        
-        ds = open(file_name, "x")
-        ds.close()
-        print("File created at %s" %(file_name))
-        return
+def gather_location(): 
+    location = input("Specify file location or enter \"d\" for the default file.\n").strip()
+
+    if location.lower() == "d": 
+        location = "draft_data_sheet.csv"
+    
+    return location
+
+def create_data_sheet(file_name): 
+    
+    ds = open(file_name, "x")
+    ds.close()
+    print("File created at %s" %(file_name))
+    return
 
 class Ingredient: 
-
 
     def input_ingredient_name(self): 
         ingredient_name = input("Enter an engredient:").lower().strip()
@@ -86,10 +88,15 @@ class Ingredient:
 
 def main(): 
     
-    NewDataSheet = DataSheet()
-    NewIngredient = Ingredient()
+    try: 
+        NewDataSheet = DataSheet(sys.argv[1])
+    except IndexError:
+        NewDataSheet = DataSheet(gather_location())
 
-    NewIngredient.find_ingredient(NewDataSheet.gather_location(), NewIngredient.input_ingredient_name())
+    NewDataSheet.open_data_sheet(NewDataSheet.data_sheet_location)
+
+    #NewIngredient = Ingredient()
+    #NewIngredient.find_ingredient(NewDataSheet.gather_location(), NewIngredient.input_ingredient_name())
 
     return
 
