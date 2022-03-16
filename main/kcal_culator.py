@@ -25,7 +25,7 @@ class DataSheet():
         location = input("Specify file location or enter \"d\" for the default file.\n").strip()
 
         if location.lower() == "d": 
-            location = "/Users/martapodziewska/Documents/01_Coding/01_GitHub_working_repos/kcal-culator/main/draft_data_sheet.csv"
+            location = "draft_data_sheet.csv"
         
         return location
 
@@ -36,7 +36,7 @@ class DataSheet():
                 data_sheet_content = ds.read()
                 print(data_sheet_content)
         except FileNotFoundError: 
-            user_input = input("The file %s does not exist. \nWould you like to create a new file? Y/N:\n" %(file_location))
+            user_input = input("The file %s does not exist. \nWould you like to create a new file? Y/N: \n" %(file_location))
             
             if user_input.lower() == "y": 
                 create_data_sheet(file_location) 
@@ -54,10 +54,12 @@ class DataSheet():
 
 class Ingredient: 
 
+
     def input_ingredient_name(self): 
         ingredient_name = input("Enter an engredient:").lower().strip()
         return ingredient_name
 
+#move to data sheet class
     def find_ingredient(self, file_location, ingredient_name): 
         ingredient_kcal = 0
 
@@ -74,6 +76,7 @@ class Ingredient:
 
         return
 
+#moved to datasheet
     def save_ingredient(self, file_location, ingredient_name):
         calorie_content = input("Enter the number of calories in 100g of %s:\n" %ingredient_name)
         with open(file_location, 'a') as ds: 

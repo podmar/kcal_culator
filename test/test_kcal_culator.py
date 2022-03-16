@@ -49,7 +49,7 @@ class TestKcalCulator(unittest.TestCase):
         ds = kcal_culator.DataSheet()
         location = ds.gather_location()
 
-        self.assertEqual(location, "/Users/martapodziewska/Documents/01_Coding/01_GitHub_working_repos/kcal-culator/main/draft_data_sheet.csv")
+        self.assertEqual(location, "draft_data_sheet.csv")
 
     def test_gather_default_location_with_capital_d(self):
         """Testing if the default location is being chosen if user types "D"
@@ -60,25 +60,18 @@ class TestKcalCulator(unittest.TestCase):
         ds = kcal_culator.DataSheet()
         location = ds.gather_location()
 
-        self.assertEqual(location, "/Users/martapodziewska/Documents/01_Coding/01_GitHub_working_repos/kcal-culator/main/draft_data_sheet.csv")
+        self.assertEqual(location, "draft_data_sheet.csv")
 
     def test_open_data_sheet_with_default_local_location(self):
         """Testing if the open funtion is opening the file with local location
         """
-#consider using tempfile
-
-        ds = kcal_culator.DataSheet()
 
         stub_stdouts(self)
-        stub_stdin(self, "n")
 
-        ds.open_data_sheet("/Users/martapodziewska/Documents/01_Coding/01_GitHub_working_repos/kcal-culator/main/draft_data_sheet.csv")
+        ds = kcal_culator.DataSheet()
+        ds.open_data_sheet("draft_data_sheet.csv")
 
-        out = "Specify file location or enter \"d\" for the default file.\n"
-        #data_sheet_content = ds.gather_location()
-
-        self.assertEqual(sys.stdout.getvalue(), out)
-        self.assertEqual(location, "./data_sheet.csv")
+        self.assertIsNotNone(sys.stdout.getvalue())
 
     def test_open_data_sheet_with_false_location(self):
         """Testing if the open funtion is handling the FileNotFoundError properly
