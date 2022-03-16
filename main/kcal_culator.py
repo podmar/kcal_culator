@@ -12,10 +12,10 @@
 #[x] and then store in the file.
 
 #TO DO
-#[ ] work on the main function
-#   [ ] implement all the functions in the flow
-#   [ ] make the program run constantly
-#[ ] find a solution for the source file (keyboard?)
+#[ ] rewrite Ingredient class for its instances to fit into the DataSheet class
+#[ ] research and choose a data structure for the ingredients (not duplicating ingredients)
+#[ ] rewrite open_data_sheet function to open and store data in the NewDataSheet object
+#[x] find a solution for the source file
 
 from csv import reader, writer
 import sys
