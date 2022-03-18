@@ -56,10 +56,12 @@ def create_data_sheet(file_name):
     return
 
 class Ingredient: 
+    def __init__(self, ingredient_name, ingredient_kcal): 
+        self.ingredient_data = [ingredient_name, ingredient_kcal]
 
-    def input_ingredient_name(self): 
-        ingredient_name = input("Enter an engredient:").lower().strip()
-        return ingredient_name
+    # def input_ingredient_name(self, ): 
+    #     ingredient_name = input("Enter an engredient:").lower().strip()
+    #     return ingredient_name
 
 #move to data sheet class
     def find_ingredient(self, file_location, ingredient_name): 
