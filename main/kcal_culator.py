@@ -23,6 +23,7 @@ import sys
 class DataSheet:
     def __init__(self, data_sheet_location):
         self.data_sheet_location = data_sheet_location.strip()
+        self.data = self.open_data_sheet(self.data_sheet_location)
 
     def open_data_sheet(self, file_location):
         data_set = []
@@ -96,6 +97,7 @@ def main():
     
     try: 
         NewDataSheet = DataSheet(sys.argv[1])
+        print(NewDataSheet.data)
     except IndexError:
         NewDataSheet = DataSheet(gather_location())
 
