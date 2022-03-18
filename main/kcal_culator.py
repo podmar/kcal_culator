@@ -24,21 +24,25 @@ class DataSheet:
     def __init__(self, data_sheet_location):
         self.data_sheet_location = data_sheet_location.strip()
 
-    def open_data_sheet(self,file_location):
-            
+    def open_data_sheet(self, file_location):
+        data_set = []
+
         try: 
-            with open(file_location) as ds: 
-                data_sheet_content = ds.read()
-                print(data_sheet_content)
+            with open(file_location, newline="") as ds: 
+                data_sheet_content = reader(ds)
+                data_set = list(data_sheet_content)
+                #data_set = set(data_set) -> gives TypeError: unhashable type: 'list'
+
         except FileNotFoundError: 
             user_input = input("The file %s does not exist. \nWould you like to create a new file? Y/N: \n" %(file_location))
             
             if user_input.lower() == "y": 
                 create_data_sheet(file_location) 
             else:
-                return
+                data_set = None
 
-        return
+        #print(data_set)
+        return data_set
 
 def gather_location(): 
     location = input("Specify file location or enter \"d\" for the default file.\n").strip()
