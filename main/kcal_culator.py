@@ -27,7 +27,12 @@ class DataSheet:
         self.data_set = set()
 
         for element in self.raw_data: 
-            self.data_set.add(Ingredient(element[0], element[1]))
+            try: 
+                self.data_set.add(Ingredient(element[0], int(element[1])))
+            #remove after bug fixing / correcting the file or add an option to correct the data in the spreadsheet. Can move to when int is actually needed?
+            except ValueError:
+                print("The kcal value of %s has been entered incorrectly" %{element[0]})
+                continue
 
     def open_data_sheet(self, file_location):
         data_set = []
@@ -35,7 +40,7 @@ class DataSheet:
         try: 
             with open(file_location, newline="") as ds: 
                 data_sheet_content = reader(ds)
-                data_set = list(data_sheet_content)
+                data_set = list(data_sheet_content).pop(0)
                 #data_set = set(data_set) -> gives TypeError: unhashable type: 'list'
 
         except FileNotFoundError: 
@@ -46,8 +51,24 @@ class DataSheet:
             else:
                 data_set = None
 
-        #print(data_set)
         return data_set
+    
+    def display_kcal(self, ingredient_name): 
+        ingredient_kcal = 0
+
+        #cannot use the below loop in set, find out how to search in sets.
+
+        for element in self.data_set: 
+            print(element.ingredient_data[0])
+            if element.ingredient_data[0] == ingredient_name:
+                ingredient_kcal = element.ingredient_data[1]
+                print(ingredient_kcal)
+                break
+                
+            # if ingredient_kcal == 0: 
+            #     self.save_ingredient(file_location, ingredient_name)
+
+        return ingredient_kcal
 
 def gather_location(): 
     location = input("Specify file location or enter \"d\" for the default file.\n").strip()
@@ -72,23 +93,6 @@ class Ingredient:
     #     ingredient_name = input("Enter an engredient:").lower().strip()
     #     return ingredient_name
 
-#move to data sheet class
-    def find_ingredient(self, file_location, ingredient_name): 
-        ingredient_kcal = 0
-
-        with open(file_location) as ds: 
-            data_sheet_content = reader(ds)
-            for row in data_sheet_content:
-                if row[0] == ingredient_name:
-                    ingredient_kcal = int(row[1])
-                    print(ingredient_kcal)
-                    break
-                
-            if ingredient_kcal == 0: 
-                self.save_ingredient(file_location, ingredient_name)
-
-        return
-
 #moved to datasheet
     def save_ingredient(self, file_location, ingredient_name):
         calorie_content = input("Enter the number of calories in 100g of %s:\n" %ingredient_name)
@@ -101,9 +105,11 @@ def main():
     
     try: 
         NewDataSheet = DataSheet(sys.argv[1])
-        print(NewDataSheet.data_set) 
+        #print(NewDataSheet.data_set) 
     except IndexError:
         NewDataSheet = DataSheet(gather_location())
+    
+    print(NewDataSheet.display_kcal(input("Which ingredient would you like to check? Type: ")))
 
     #NewIngredient = Ingredient()
     #NewIngredient.find_ingredient(NewDataSheet.gather_location(), NewIngredient.input_ingredient_name())
